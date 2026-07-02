@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="popup.css" />
+  <title>Aarti Booking Autofill</title>
+</head>
+<body>
+  <header>
+    <h1>🛕 Aarti Booking Autofill</h1>
+    <p class="sub">Save devotees and fill the booking form in one click.</p>
+  </header>
+
+  <section id="form-section">
+    <h2 id="form-title">Add devotee</h2>
+    <form id="person-form">
+      <input type="hidden" id="person-id" />
+
+      <label>Full name
+        <input type="text" id="fullName" autocomplete="off" required placeholder="As per Aadhaar" />
+      </label>
+
+      <div class="row">
+        <label>Age
+          <input type="number" id="age" min="0" max="120" required placeholder="e.g. 34" />
+        </label>
+
+        <label>Gender
+          <select id="gender" required>
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+      </div>
+
+      <label>Relationship
+        <select id="relationship">
+          <option value="Self" selected>Self</option>
+          <option value="Father">Father</option>
+          <option value="Mother">Mother</option>
+          <option value="Son">Son</option>
+          <option value="Daughter">Daughter</option>
+          <option value="Spouse">Spouse</option>
+          <option value="Husband">Husband</option>
+          <option value="Wife">Wife</option>
+          <option value="Brother">Brother</option>
+          <option value="Sister">Sister</option>
+          <option value="Other">Other</option>
+        </select>
+      </label>
+
+      <label>ID proof type
+        <select id="idProofType">
+          <option value="Aadhaar Card" selected>Aadhaar Card</option>
+        </select>
+      </label>
+
+      <label>Aadhaar number
+        <input type="text" id="aadhaar" inputmode="numeric" maxlength="14"
+               required placeholder="1234 5678 9012" />
+        <span class="hint" id="aadhaar-hint"></span>
+      </label>
+
+      <label>Face photo (for "Upload Your Face")
+        <input type="file" id="photo" accept="image/*" />
+        <span class="hint">Optional. Compressed &amp; stored locally only.</span>
+      </label>
+      <div id="photo-preview" class="photo-preview hidden">
+        <img id="photo-img" alt="face preview" />
+        <button type="button" id="photo-remove" class="ghost">Remove photo</button>
+      </div>
+
+      <div class="actions">
+        <button type="submit" id="save-btn">Save devotee</button>
+        <button type="button" id="cancel-btn" class="ghost hidden">Cancel</button>
+      </div>
+    </form>
+  </section>
+
+  <section id="list-section">
+    <div class="list-head">
+      <h2>Saved devotees (<span id="count">0</span>)</h2>
+    </div>
+    <button type="button" id="fill-all-btn" class="fill-all hidden">⬇ Fill all rows on page</button>
+    <ul id="person-list"></ul>
+    <p id="empty-msg" class="empty">No devotees saved yet.</p>
+  </section>
+
+  <footer>
+    <p class="tip">Tip: open the booking page, then click a devotee's <strong>Fill</strong> button,
+       or use the floating panel on the page itself.</p>
+  </footer>
+
+  <script src="storage.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

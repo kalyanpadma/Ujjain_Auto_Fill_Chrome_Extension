@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Mahakaleshwar Aarti Booking Autofill",
+  "version": "1.0.0",
+  "description": "Save devotee details (name, age, gender, Aadhaar) and autofill them into the Shri Mahakaleshwar aarti booking form.",
+  "permissions": ["storage", "activeTab", "scripting", "unlimitedStorage"],
+  "host_permissions": [
+    "https://www.shrimahakaleshwar.mp.gov.in/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Aarti Booking Autofill",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.shrimahakaleshwar.mp.gov.in/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+#aarti-launcher {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #e8722b, #c95e1c);
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 2147483646;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+#aarti-launcher:hover { transform: scale(1.06); }
+
+#aarti-panel {
+  position: fixed;
+  right: 18px;
+  bottom: 76px;
+  width: 280px;
+  max-height: 60vh;
+  overflow: auto;
+  background: #fff;
+  border: 1px solid #f0d9c6;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  z-index: 2147483646;
+  font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+  font-size: 13px;
+  color: #3a2a1d;
+}
+#aarti-panel.hidden { display: none; }
+
+.aarti-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: linear-gradient(135deg, #e8722b, #c95e1c);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 12px 12px 0 0;
+}
+.aarti-head button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.aarti-bulk { padding: 8px 8px 0; }
+.aarti-bulk button {
+  width: 100%;
+  background: #c95e1c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+}
+.aarti-bulk button:hover { background: #a94e15; }
+
+#aarti-list { padding: 8px; }
+.aarti-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid #f0d9c6;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.aarti-info { display: flex; flex-direction: column; }
+.aarti-info span { color: #8a7a6c; font-size: 11px; }
+.aarti-fill {
+  background: #2e8b57;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.aarti-fill:hover { background: #246b43; }
+.aarti-empty { color: #8a7a6c; text-align: center; padding: 12px; font-style: italic; }
+.aarti-foot { padding: 8px 12px; color: #8a7a6c; font-size: 10px; border-top: 1px solid #f0d9c6; }
+
+#aarti-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%) translateY(20px);
+  background: #2e8b57;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+  font-size: 13px;
+  z-index: 2147483647;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+#aarti-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
