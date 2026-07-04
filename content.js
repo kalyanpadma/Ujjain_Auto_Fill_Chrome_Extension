@@ -87,6 +87,18 @@
   const isSelect = (el) => el && el.tagName === "SELECT";
   const isFile = (el) => el && el.type === "file";
 
+  // Identify what a visitor-row <select> is for by its OPTION TEXT rather than
+  // its position (the form has no ids/labels, and field order varies between
+  // form variants). Gender / ID-proof-type / Relationship all look alike
+  // structurally, so we sniff the choices they offer.
+  function classifySelect(sel) {
+    const txt = [...sel.options].map((o) => o.textContent.toLowerCase()).join(" ");
+    if (/\b(male|female)\b/.test(txt)) return "gender";
+    if (/aadhaar|aadhar|\buid\b|\bpan\b|voter|passport|driving|licen[cs]e/.test(txt)) return "idType";
+    if (/self|father|mother|spouse|husband|wife|son|daughter|brother|sister|relative/.test(txt)) return "relationship";
+    return "unknown";
+  }
+
   // Inject an image (data URL) into a file input the way the browser allows
   // scripts to: build a File and assign it via a DataTransfer list.
   async function setFile(input, dataUrl, name) {
@@ -113,9 +125,17 @@
       if (!isText(L[i])) { i++; continue; }          // a row starts at Name (text)
       const row = { name: L[i++] };
       if (isFile(L[i])) row.photo = L[i++];           // Upload Your Face
-      if (isNumberish(L[i])) row.age = L[i++];        // Age (older form variant)
-      if (isSelect(L[i])) row.relationship = L[i++];  // Relationship
-      if (isSelect(L[i])) row.idType = L[i++];        // ID Proof Type
+      if (isNumberish(L[i])) row.age = L[i++];        // Age
+      // Consume the run of selects (Gender / ID Proof Type / Relationship in
+      // any order) and assign each by what it actually offers.
+      while (isSelect(L[i])) {
+        const kind = classifySelect(L[i]);
+        if (kind === "gender") row.gender = L[i];
+        else if (kind === "idType") row.idType = L[i];
+        else if (kind === "relationship") row.relationship = L[i];
+        else if (!row.idType) row.idType = L[i]; // fallback: assume ID-proof type
+        i++;
+      }
       if (isText(L[i])) row.idNumber = L[i++];        // ID Proof Number
       rows.push(row);
     }
@@ -126,6 +146,7 @@
     const done = [];
     if (row.name) { setValue(row.name, person.fullName); done.push("name"); }
     if (row.age) { setValue(row.age, String(person.age)); done.push("age"); }
+    if (row.gender && person.gender && setSelect(row.gender, person.gender)) done.push("gender");
     if (row.relationship && setSelect(row.relationship, person.relationship || "Self")) done.push("relationship");
     if (row.idType && setSelect(row.idType, person.idProofType || "Aadhaar")) done.push("ID type");
     if (row.idNumber) { setValue(row.idNumber, aadhaarDigits(person.aadhaar)); done.push("ID number"); }
